@@ -194,7 +194,7 @@ function DBChangeDataBase($database, $link): bool
  * @param mysqli|null $link
  * @return mixed
  */
-function DBQuery(string $query, ?mysqli $link = null): mixed
+function DBQuery(string $query, mysqli|null $link = null): mixed
 {
     if($link === null) {
 
@@ -212,12 +212,17 @@ function DBQuery(string $query, ?mysqli $link = null): mixed
 
 /**
  * Return the last id inserted in the database in which it is connected.
- * @param mysqli|mysqli_result $result
+ * @param mysqli|null $link
  * @return int|string
  */
-function DBLastInsert(mysqli|mysqli_result $result): int|string
+function DBLastInsert(mysqli|null $link = null): int|string
 {
-    return mysqli_insert_id($result);
+    if($link === null) {
+
+        $link = DBGetConnection();
+    }
+
+    return mysqli_insert_id($link);
 }
 
 /**
@@ -225,9 +230,13 @@ function DBLastInsert(mysqli|mysqli_result $result): int|string
  * @param string $text
  * @return string
  */
-function DBEscapeString(string $text): string
+function DBEscapeString(string $text, mysqli|null $link = null): string
 {
-    $link = DBGetConnection();
+    if($link === null) {
+
+        $link = DBGetConnection();
+    }
+
     return mysqli_real_escape_string($link, $text);
 }
 #endregion Query
