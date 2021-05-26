@@ -6,12 +6,6 @@ use mysqli;
 use mysqli_result;
 
 /**
- * Library focused on facilitating and delivering the most complete system for executing queries to mysql databases.
- * @author Jean Piffaut - https://github.com/JeanPiffaut
- * @version 1.0.2
- */
-
-/**
  * The functions of this region focus on validating the processes and in case of error, grouping them in their own
  * review method.
  * The function to perform validations can be modified and in fact it is expected that something will be done to meet
