@@ -149,6 +149,13 @@ function DBConnect(string $host, string $user, string $password, string $databas
             return false;
         } else {
 
+            $_SESSION['host'] = $host;
+            $_SESSION['user'] = $user;
+            $_SESSION['password'] = $password;
+            $_SESSION['database'] = $database;
+            $_SESSION['port'] = $port;
+            $_SESSION['socket'] = $socket;
+
             DBSetConnection($link);
             return $link;
         }
