@@ -151,7 +151,6 @@ function DBConnect(string $host, string $user, string $password, string $databas
 
             $_SESSION['host'] = $host;
             $_SESSION['user'] = $user;
-            $_SESSION['password'] = $password;
             $_SESSION['port'] = $port;
             $_SESSION['socket'] = $socket;
 
@@ -187,6 +186,8 @@ function DBDisconnect(mysqli $link): void
 }
 
 /**
+ * Allows you to choose the database to be used as the main database for queries.
+ * It is also in charge of updating the gloval variable that stores in a simple way the name of the database.
  * @param string $database
  * @param mysqli|null $link
  * @return bool
@@ -206,11 +207,13 @@ function DBSelectDataBase(string $database, mysqli|null $link = null): bool
         return true;
     } else {
 
+        DBSetError(mysqli_error($link), mysqli_errno($link));
         return false;
     }
 }
 
 /**
+ *
  * @param string $user
  * @param string $password
  * @param string|null $database
@@ -238,10 +241,10 @@ function DBChangeUser(string $user, string $password, string|null $database, mys
     if($result !== false) {
 
         $_SESSION['user'] = $user;
-        $_SESSION['password'] = $password;
         return true;
     } else {
 
+        DBSetError(mysqli_error($link), mysqli_errno($link));
         return false;
     }
 }
