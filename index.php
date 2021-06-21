@@ -13,12 +13,10 @@ include_once dirname(__FILE__) . "/lib_database.php";
 $host     = "localhost";
 $user     = "root";
 $password = "root";
-$database = "swiff_base";
-$port     = 3307;
-$socket   = "/Applications/MAMP/tmp/mysql/mysql.sock";
+$database = "data_base";
 
 // We make the connection with the database
-$return = DBConnect($host, $user, $password, $database, $port, $socket);
+$return = DBConnect($host, $user, $password, $database);
 
 // We validate that a connection error has not been generated.
 if(DBGetError() != false) {
@@ -28,7 +26,7 @@ if(DBGetError() != false) {
 }
 
 // Make a query to a table in the database.
-$sql = "SELECT * FROM se_settings";
+$sql = "SELECT * FROM table";
 $result = DBQuery($sql);
 
 // Validate that there is no error in the query made
