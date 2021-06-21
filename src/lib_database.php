@@ -142,7 +142,7 @@ function DBConnect(string $host, string $user, string $password, string $databas
 {
     if(DBValidateSession() === true) {
 
-        $link = mysqli_connect($host, $user, $password, $database, $port, $socket);
+        $link = mysqli_connect($host, $user, $password, null, $port, $socket);
         if($link === false || $link === null) {
 
             DBSetError(mysqli_connect_error(), mysqli_connect_errno());
@@ -152,12 +152,18 @@ function DBConnect(string $host, string $user, string $password, string $databas
             $_SESSION['host'] = $host;
             $_SESSION['user'] = $user;
             $_SESSION['password'] = $password;
-            $_SESSION['database'] = $database;
             $_SESSION['port'] = $port;
             $_SESSION['socket'] = $socket;
 
             DBSetConnection($link);
-            return $link;
+
+            if(DBSelectDataBase($database, $link)) {
+
+                return $link;
+            } else {
+
+                return false;
+            }
         }
     } else {
 
@@ -180,10 +186,64 @@ function DBDisconnect(mysqli $link): void
     mysqli_close($link);
 }
 
-function DBChangeDataBase($database, $link): bool
+/**
+ * @param string $database
+ * @param mysqli|null $link
+ * @return bool
+ */
+function DBSelectDataBase(string $database, mysqli|null $link = null): bool
 {
+    if($link === null) {
 
-    return true;
+        $link = DBGetConnection();
+    }
+
+    $result = mysqli_select_db($link, $database);
+
+    if($result !== false) {
+
+        $_SESSION['database'] = $database;
+        return true;
+    } else {
+
+        return false;
+    }
+}
+
+/**
+ * @param string $user
+ * @param string $password
+ * @param string|null $database
+ * @param mysqli|null $link
+ * @return bool
+ */
+function DBChangeUser(string $user, string $password, string|null $database, mysqli|null $link):bool
+{
+    if($link === null) {
+
+        $link = DBGetConnection();
+    }
+
+    if(isset($_SESSION['database'])) {
+
+        $database = $_SESSION['database'];
+    } else {
+
+        DBSetError('No main database has been defined to query and update the user.');
+        return false;
+    }
+
+    $result = mysqli_change_user($link, $user, $password, $database);
+
+    if($result !== false) {
+
+        $_SESSION['user'] = $user;
+        $_SESSION['password'] = $password;
+        return true;
+    } else {
+
+        return false;
+    }
 }
 #endregion Connection
 
