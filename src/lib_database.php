@@ -39,10 +39,10 @@ function DBValidateSession(): bool
 
 /**
  * It defines a new error that has been generated during the process and stores it in the variable in charge.
- * @param $message
- * @param string $code
+ * @param string $message
+ * @param string|int $code
  */
-function DBSetError($message, $code = ""): void
+function DBSetError(string $message, string|int $code = ""): void
 {
     global $DBError;
     $error = array();
