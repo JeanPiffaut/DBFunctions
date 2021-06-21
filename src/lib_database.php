@@ -235,6 +235,7 @@ function DBLastInsert(mysqli|null $link = null): int|string
 /**
  * Returns the string with the escaped characters according to to avoid errors in the database.
  * @param string $text
+ * @param mysqli|null $link
  * @return string
  */
 function DBEscapeString(string $text, mysqli|null $link = null): string
@@ -281,7 +282,7 @@ function DBNumRows(mysqli_result $result): int
  * @param int|string $offset
  * @return bool
  */
-function DBDataSeek(mysqli_result &$result, int|string $offset = 0): bool
+function DBDataSeek(mysqli_result $result, int|string $offset = 0): bool
 {
     return mysqli_data_seek($result, $offset);
 }
