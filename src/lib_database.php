@@ -39,10 +39,10 @@ function DBValidateSession(): bool
 
 /**
  * It defines a new error that has been generated during the process and stores it in the variable in charge.
- * @param $message
- * @param string $code
+ * @param string $message
+ * @param string|int $code
  */
-function DBSetError($message, $code = ""): void
+function DBSetError(string $message, string|int $code = ""): void
 {
     global $DBError;
     $error = array();
@@ -235,6 +235,7 @@ function DBLastInsert(mysqli|null $link = null): int|string
 /**
  * Returns the string with the escaped characters according to to avoid errors in the database.
  * @param string $text
+ * @param mysqli|null $link
  * @return string
  */
 function DBEscapeString(string $text, mysqli|null $link = null): string
@@ -281,7 +282,7 @@ function DBNumRows(mysqli_result $result): int
  * @param int|string $offset
  * @return bool
  */
-function DBDataSeek(mysqli_result &$result, int|string $offset = 0): bool
+function DBDataSeek(mysqli_result $result, int|string $offset = 0): bool
 {
     return mysqli_data_seek($result, $offset);
 }

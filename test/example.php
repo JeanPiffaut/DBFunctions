@@ -8,7 +8,7 @@ use function DBFunctions\DBGetError;
 use function DBFunctions\DBNumRows;
 use function DBFunctions\DBQuery;
 
-include_once dirname(__FILE__) . "/lib_database.php";
+include_once dirname(__FILE__) . "../src/lib_database.php";
 
 $host     = "localhost";
 $user     = "root";
