@@ -211,6 +211,19 @@ function DBSelectDataBase(string $database, mysqli|null $link = null): bool
         return false;
     }
 }
+
+/**
+ *
+ * @param string $user
+ * @param string $password
+ * @param string|null $database
+ * @param mysqli|null $link
+ * @return bool
+ */
+function DBChangeUser(string $user, string $password, string|null $database, mysqli|null $link):bool
+{
+    return false;
+}
 #endregion Connection
 
 /**
