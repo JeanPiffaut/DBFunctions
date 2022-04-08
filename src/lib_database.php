@@ -211,43 +211,6 @@ function DBSelectDataBase(string $database, mysqli|null $link = null): bool
         return false;
     }
 }
-
-/**
- *
- * @param string $user
- * @param string $password
- * @param string|null $database
- * @param mysqli|null $link
- * @return bool
- */
-function DBChangeUser(string $user, string $password, string|null $database, mysqli|null $link):bool
-{
-    if($link === null) {
-
-        $link = DBGetConnection();
-    }
-
-    if(isset($_SESSION['database'])) {
-
-        $database = $_SESSION['database'];
-    } else {
-
-        DBSetError('No main database has been defined to query and update the user.');
-        return false;
-    }
-
-    $result = mysqli_change_user($link, $user, $password, $database);
-
-    if($result !== false) {
-
-        $_SESSION['user'] = $user;
-        return true;
-    } else {
-
-        DBSetError(mysqli_error($link), mysqli_errno($link));
-        return false;
-    }
-}
 #endregion Connection
 
 /**
